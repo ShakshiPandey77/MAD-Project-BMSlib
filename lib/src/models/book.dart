@@ -10,14 +10,16 @@ class Book {
   num copies; // available copies of the book
   num edition; // edition of the book
 
-  Book(
+  Book({
     this.uid,
     this.title,
     this.author,
     this.coverUrl,
     this.category,
-    this.rating,
+    this.edition,
     this.publisher,
+    this.copies,
+    this.rating,
     this.searchKey,
-  );
+  });
 }

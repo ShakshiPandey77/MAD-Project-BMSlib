@@ -141,7 +141,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //var themeNotifier = Provider.of<ThemeNotifier>(context);
-    var bookNotifier = Provider.of<BookNotifier>(context);
+    //var bookNotifier = Provider.of<BookNotifier>(context);
     // FIXME: Want to set wideScreen here but it can't be null
     // Don't know why it is not possible to initialize it here
 
@@ -154,24 +154,26 @@ class HomeScreen extends StatelessWidget {
                 children: <Widget>[
                   Flexible(
                     flex: 4,
-                    child: BookList(),
+                    child: null,
+                    //child: BookList(),
                   ),
                   Flexible(
                     flex: 6,
-                    child: BookDetails(
-                        bookNotifier.books[bookNotifier.selectedIndex]),
+                    child: null,
+                    // child: BookDetails(
+                    //     bookNotifier.books[bookNotifier.selectedIndex]),
                   ),
                 ],
               )
-            : BookList(),
+            : null, //BookList(),
       ),
       floatingActionButton:
           MediaQuery.of(context).size.width < wideLayoutThreshold
               ? FloatingActionButton(
                   child: Icon(Icons.add),
                   onPressed: () {
-                    Navigator.push(
-                        context, MaterialPageRoute(builder: (_) => BookAdd()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => null /*BookAdd()*/));
                   },
                 )
               : Container(),

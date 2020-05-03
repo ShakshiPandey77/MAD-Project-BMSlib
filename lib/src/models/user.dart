@@ -1,25 +1,33 @@
-class Admin {
-  final String uid;
-  final String name;
-  final String type;
+// class Admin {
+//   final String uid;
+//   final String name;
+//   final String type;
 
-  Admin(
-    this.uid,
-    this.name,
-    this.type,
-  );
-}
+//   Admin(
+//     this.uid,
+//     this.name,
+//     this.type,
+//   );
+// }
 
 class User {
-  final String uid; // user id : library card number
+  final String uid;
+
+  User({this.uid});
+}
+
+class UserData {
+  final String uid; //user id in database
+  final String libid; //library card number
   final String name; // user name
   final String email; // user email
   final String phone; // user phone number
   final int borrowed; // number of borrowed books
   final List<Bag> bag; // user's bag
 
-  User({
+  UserData({
     this.uid,
+    this.libid,
     this.name,
     this.email,
     this.phone,

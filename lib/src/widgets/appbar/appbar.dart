@@ -37,7 +37,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
         IconButton(
           icon: Icon(Icons.search),
           onPressed: () {
-            showSearch(context: context, delegate: BookSearch());
+            showSearch(context: context, delegate: null /*BookSearch()*/);
           },
         ),
       ],

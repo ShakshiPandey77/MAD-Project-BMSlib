@@ -15,7 +15,7 @@ class BMSLib extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeNotifier()),
-        ChangeNotifierProvider(create: (_) => BookNotifier()),
+        //ChangeNotifierProvider(create: (_) => BookNotifier()),
         Provider<AuthService>(create: (_) => AuthService()),
       ],
       child: MaterialAppWithTheme(), //add wrapper here

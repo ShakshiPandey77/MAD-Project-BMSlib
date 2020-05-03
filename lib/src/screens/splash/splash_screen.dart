@@ -1,6 +1,6 @@
+import 'package:bmslib/src/widgets/loading/loading.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:bmslib/src/screens/home/home_screen.dart';
 import 'package:bmslib/src/screens/authenticate/signin.dart';
@@ -38,20 +38,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _navigateToLogin() {
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (BuildContext context) => SignIn()));
+        MaterialPageRoute(builder: (BuildContext context) => null));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: SpinKitRotatingCircle(
-          color: Colors.blueAccent,
-          size: 50.0,
-        ),
-      ),
-    );
+    return Loading();
   }
 }
 
