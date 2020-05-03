@@ -103,15 +103,21 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("images/background.jpg"),
+          image: AssetImage("assets/images/background.jpg"),
           fit: BoxFit.cover,
         ),
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
+          backgroundColor: Colors.blueAccent[100],
           title: Center(
-            child: Text('Welcome to BMSLib'),
+            child: Text(
+              _isLoginForm ? "Login" : "Sign Up",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
           ),
         ),
         body: Container(

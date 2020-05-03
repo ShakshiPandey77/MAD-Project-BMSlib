@@ -7,3 +7,4 @@ alias buildInstallApk = "./gradlew installDebug"
 alias launchDebugApk="adb shell monkey -p `aapt dump badging ./app/build/outputs/apk/debug/app-debug.apk | grep -e 'package: name' | cut -d \' -f 2` 1"
 # command
 buildInstallApk && launchDebugApk
+

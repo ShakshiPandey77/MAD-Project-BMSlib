@@ -47,6 +47,8 @@ flutter:
   assets:
     - assets/images/book-cover-placeholder-light.png
     - assets/images/book-cover-placeholder-dark.png
+    - assets/images/icon.png
+    - assets/images/background.jpg
 
   fonts:
     - family: Nunito

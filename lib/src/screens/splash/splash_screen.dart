@@ -19,6 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     // check if user is already logged in
     _displayScreen().then((status) {
+      print("Hi");
       final user = Provider.of<User>(context);
       if (user == null) {
         // not signed in
