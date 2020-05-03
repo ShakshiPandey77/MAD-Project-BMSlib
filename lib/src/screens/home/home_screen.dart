@@ -145,6 +145,7 @@ class HomeScreen extends StatelessWidget {
     // FIXME: Want to set wideScreen here but it can't be null
     // Don't know why it is not possible to initialize it here
 
+    // stream provider for book data
     return Scaffold(
       appBar: CustomAppBar(),
       drawer: IssuerDrawer(),

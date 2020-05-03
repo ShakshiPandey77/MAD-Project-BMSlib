@@ -25,6 +25,32 @@ class DatabaseService {
     });
   }
 
+  // return library card number of current user
+  Future<String> getData(String data) async {
+    return await userCollection
+        .document(uid)
+        .get()
+        .then((doc) => doc.data[data].toString());
+  }
+
+  // get current user strean
+  Stream<UserData> get user {
+    return userCollection.document(uid).snapshots().map(_userDataFromSnapshot);
+  }
+
+  // return current user data
+  UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
+    return UserData(
+      uid: snapshot.documentID,
+      libid: snapshot.data['libid'] ?? '',
+      name: snapshot.data['name'] ?? '',
+      phone: snapshot.data['phone'] ?? '',
+      email: snapshot.data['email'] ?? '',
+      borrowed: snapshot.data['borrowed'] ?? 0,
+      bag: snapshot.data['bag'] ?? [],
+    );
+  }
+
   Future<void> updateBookData(String barcode, int edition, int copies,
       double rating, String coverUrl) async {
     return await bookCollection.document(barcode).setData({
@@ -36,8 +62,8 @@ class DatabaseService {
   }
 
   // get books stream
-  Stream<QuerySnapshot> get books {
-    return bookCollection.snapshots();
+  Stream<List<Book>> get books {
+    return bookCollection.snapshots().map(_bookListFromSnapshot);
   }
 
   // book list from snapshot
@@ -55,6 +81,6 @@ class DatabaseService {
         rating: doc.data['rating'] ?? 0,
         searchKey: doc.data['searchKey'] ?? '',
       );
-    });
+    }).toList();
   }
 }

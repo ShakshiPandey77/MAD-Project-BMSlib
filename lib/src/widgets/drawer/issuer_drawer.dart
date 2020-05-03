@@ -1,6 +1,8 @@
+import 'package:bmslib/src/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class IssuerDrawer extends StatelessWidget {
+  final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -12,6 +14,12 @@ class IssuerDrawer extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.blueGrey[100],
             ),
+          ),
+          ListTile(
+            title: Text('Logout'),
+            onTap: () {
+              _auth.signOut();
+            },
           ),
           ListTile(
             title: Text('Close'),

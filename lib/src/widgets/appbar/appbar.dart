@@ -23,8 +23,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
 
     return AppBar(
       title: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Text('BMS Lib'),
+        padding: const EdgeInsets.all(8.0),
+        child: Text('BMSLib'),
       ),
       actions: [
         IconButton(

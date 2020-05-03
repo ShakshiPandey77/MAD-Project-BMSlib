@@ -1,3 +1,4 @@
+import 'package:bmslib/src/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +17,9 @@ class BMSLib extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeNotifier()),
         //ChangeNotifierProvider(create: (_) => BookNotifier()),
-        Provider<AuthService>(create: (_) => AuthService()),
+        StreamProvider<User>.value(
+          value: AuthService().user,
+        ),
       ],
       child: MaterialAppWithTheme(), //add wrapper here
     );
