@@ -31,6 +31,7 @@ class MaterialAppWithTheme extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     return MaterialApp(
+      title: 'BMSLib',
       darkTheme: libraryTheme.Theme.darkTheme,
       theme: themeNotifier.darkModeEnabled
           ? libraryTheme.Theme.darkTheme

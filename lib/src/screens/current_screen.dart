@@ -99,10 +99,14 @@ class CurrentScreen extends StatelessWidget {
       stream: authService.getAuth.onAuthStateChanged,
       builder: (BuildContext context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
+          print("waiting...");
           return Loading();
         } else if (snapshot.hasData) {
+          print(snapshot.data.toString());
+          print("-> Home");
           return HomeScreen();
         } else {
+          print("-> Login");
           return LoginSignupPage();
         }
       },

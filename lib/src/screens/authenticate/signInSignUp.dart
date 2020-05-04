@@ -180,13 +180,16 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   Widget showErrorMessage() {
     if (_errorMessage.length > 0 && _errorMessage != null) {
-      return Text(
-        _errorMessage,
-        style: TextStyle(
-          fontSize: 13.0,
-          color: Colors.red,
-          height: 1.0,
-          fontWeight: FontWeight.w300,
+      return Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Text(
+          _errorMessage,
+          style: TextStyle(
+            fontSize: 18.0,
+            color: Colors.red,
+            height: 1.0,
+            fontWeight: FontWeight.w700,
+          ),
         ),
       );
     } else {
@@ -200,7 +203,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     return Hero(
       tag: 'hero',
       child: Padding(
-        padding: EdgeInsets.fromLTRB(0.0, 70.0, 0.0, 0.0),
+        padding: EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
         child: CircleAvatar(
           backgroundColor: Colors.transparent,
           radius: 28.0,
@@ -213,11 +216,13 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   Widget showText() {
     return Padding(
       padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
-      child: Text(
-        (_isLoginForm ? 'Sign In' : 'Sign Up'),
-        style: TextStyle(
-          color: Colors.grey[800],
-          fontSize: 24.0,
+      child: Center(
+        child: Text(
+          (_isLoginForm ? 'Sign In' : 'Sign Up'),
+          style: TextStyle(
+            color: Colors.grey[800],
+            fontSize: 28.0,
+          ),
         ),
       ),
     );
@@ -225,11 +230,14 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   Widget showEmailInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(0.0, 70.0, 0.0, 0.0),
       child: TextFormField(
         maxLines: 1,
         keyboardType: TextInputType.emailAddress,
         autofocus: false,
+        style: TextStyle(
+          color: Colors.grey[900],
+        ),
         decoration: InputDecoration(
           hintText: 'Email',
           icon: Icon(
@@ -256,6 +264,9 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       child: TextFormField(
         maxLines: 1,
         obscureText: true,
+        style: TextStyle(
+          color: Colors.grey[900],
+        ),
         autofocus: false,
         decoration: InputDecoration(
             hintText: 'Password',
@@ -282,6 +293,9 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       child: TextFormField(
         maxLines: 1,
         autofocus: false,
+        style: TextStyle(
+          color: Colors.grey[900],
+        ),
         decoration: InputDecoration(
           hintText: 'Library Card Number',
           icon: Icon(
@@ -292,7 +306,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         validator: (value) {
           if (value.isEmpty)
             return 'Library Card can\'t be empty';
-          else if (value.length > 8)
+          else if (value.length != 8)
             return 'Invalid Card Number';
           else
             return null;
@@ -308,6 +322,9 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       child: TextFormField(
         maxLines: 1,
         autofocus: false,
+        style: TextStyle(
+          color: Colors.grey[900],
+        ),
         decoration: InputDecoration(
           hintText: 'Name',
           icon: Icon(
@@ -327,6 +344,9 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       child: TextFormField(
         maxLines: 1,
         autofocus: false,
+        style: TextStyle(
+          color: Colors.grey[900],
+        ),
         decoration: InputDecoration(
           hintText: 'Phone',
           icon: Icon(
@@ -359,7 +379,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   Widget showPrimaryButton() {
     return Padding(
-      padding: EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 0.0),
+      padding: EdgeInsets.fromLTRB(0.0, 35.0, 0.0, 0.0),
       child: SizedBox(
         height: 40.0,
         child: RaisedButton(
@@ -378,39 +398,3 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     );
   }
 }
-
-// import 'package:flutter/material.dart';
-
-// class LoginSignupPage extends StatefulWidget {
-//   @override
-//   _LoginSignupPageState createState() => _LoginSignupPageState();
-// }
-
-// class _LoginSignupPageState extends State<LoginSignupPage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       decoration: BoxDecoration(
-//         image: DecorationImage(
-//           image: AssetImage("assets/images/background.jpg"),
-//           fit: BoxFit.cover,
-//         ),
-//       ),
-//       child: Scaffold(
-//         backgroundColor: Colors.transparent,
-//         body: Container(
-//           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-//           child: Form(
-//             child: Column(
-//               children: <Widget>[
-//                 Expanded(
-//                   child: SizedBox(height: 20.0),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

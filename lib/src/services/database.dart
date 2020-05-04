@@ -14,11 +14,12 @@ class DatabaseService {
   final CollectionReference userCollection =
       Firestore.instance.collection('users');
 
-  Future<void> updateUserData(String libid, String name, String phone,
-      int borrowed, List<Bag> bag) async {
+  Future<void> updateUserData(String libid, String name, String email,
+      String phone, int borrowed, List<Bag> bag) async {
     return await userCollection.document(uid).setData({
       'libcard': libid,
       'name': name,
+      'email': email,
       'phone': phone,
       'borrowed': borrowed,
       'bag': bag,

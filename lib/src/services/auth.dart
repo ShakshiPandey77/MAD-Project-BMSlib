@@ -56,6 +56,7 @@ class AuthService {
         newUser.libid,
         newUser.name,
         newUser.email,
+        newUser.phone,
         newUser.borrowed,
         newUser.bag,
       );
