@@ -4,17 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:bmslib/src/services/auth.dart';
 
 class LoginSignupPage extends StatefulWidget {
-  // final AuthService auth;
-  // final VoidCallback loginCallback;
-
-  // LoginSignupPage({this.auth, this.loginCallback});
-
   @override
   State<StatefulWidget> createState() => new _LoginSignupPageState();
 }
 
 class _LoginSignupPageState extends State<LoginSignupPage> {
-  final _formKey = new GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   final AuthService _auth = AuthService();
 
   String _email;
@@ -32,8 +27,10 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     final form = _formKey.currentState;
     if (form.validate()) {
       form.save();
+      //print("true");
       return true;
     }
+    //print("false");
     return false;
   }
 
@@ -45,36 +42,43 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     });
     if (validateAndSave()) {
       User user;
-      try {
-        if (_isLoginForm) {
-          user = await _auth.signIn(_email, _libcard, _password);
+      if (_isLoginForm) {
+        // login the user
+        user = await _auth.signIn(_email, _libcard, _password);
+        if (user != null) {
           print('Signed in: ${user.uid}');
         } else {
-          UserData newUser = new UserData(
-              libid: _libcard,
-              name: _name,
-              email: _email,
-              phone: _phone,
-              borrowed: 0,
-              bag: []);
-          user = await _auth.signUp(newUser, _password);
-          print('Signed up user: ${user.uid}');
+          setState(() {
+            _isLoading = false;
+            _errorMessage = "Could not sign in with those credentials :(";
+            _formKey.currentState.reset();
+          });
         }
-        setState(() {
-          _isLoading = false;
-        });
-
-        // if (userId.length > 0 && userId != null && _isLoginForm) {
-        //   widget.loginCallback();
-        // }
-      } catch (e) {
-        print('Error: $e');
-        setState(() {
-          _isLoading = false;
-          _errorMessage = e.message;
-          _formKey.currentState.reset();
-        });
+      } else {
+        // sign up the user
+        UserData newUser = new UserData(
+            libid: _libcard,
+            name: _name,
+            email: _email,
+            phone: _phone,
+            borrowed: 0,
+            bag: []);
+        user = await _auth.signUp(newUser, _password);
+        if (user != null) {
+          print('Signed up user: ${user.uid}');
+        } else {
+          setState(() {
+            _isLoading = false;
+            _errorMessage = "Could not sign up :(";
+            _formKey.currentState.reset();
+          });
+        }
       }
+    } else {
+      // form validation failed
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -109,54 +113,69 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          backgroundColor: Colors.blueAccent[100],
-          title: Center(
-            child: Text(
-              _isLoginForm ? "Login" : "Sign Up",
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ),
         body: Container(
-          child: _isLoading ? Loading() : _showForm(),
+          child: Stack(
+            children: <Widget>[
+              _showForm(),
+              _showLoading(),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  // Widget _showLoading() {
-  //   if (_isLoading) {
-  //     return Loading();
-  //   }
-  //   return Container(
-  //     height: 0.0,
-  //     width: 0.0,
-  //   );
-  // }
+  Widget _showLoading() {
+    if (_isLoading) {
+      //return Center(
+      // child: CircularProgressIndicator(),
+      //);
+      return Loading();
+    }
+    return Container(
+      height: 0.0,
+      width: 0.0,
+    );
+  }
 
   Widget _showForm() {
     return Container(
-        padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            shrinkWrap: true,
-            children: <Widget>[
-              showLogo(),
-              showEmailInput(),
-              showLibNumInput(),
-              !_isLoginForm ? showNameInput() : null,
-              !_isLoginForm ? showPhoneInput() : null,
-              showPasswordInput(),
-              showPrimaryButton(),
-              showSecondaryButton(),
-              showErrorMessage(),
-            ],
-          ),
-        ));
+      padding: EdgeInsets.all(16.0),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: ListView(
+                children: (_isLoginForm)
+                    ? <Widget>[
+                        showLogo(),
+                        showText(),
+                        showEmailInput(),
+                        showLibNumInput(),
+                        showPasswordInput(),
+                        showErrorMessage(),
+                        showPrimaryButton(),
+                        showSecondaryButton(),
+                      ]
+                    : <Widget>[
+                        showLogo(),
+                        showText(),
+                        showEmailInput(),
+                        showLibNumInput(),
+                        showNameInput(),
+                        showPhoneInput(),
+                        showPasswordInput(),
+                        showErrorMessage(),
+                        showPrimaryButton(),
+                        showSecondaryButton(),
+                      ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget showErrorMessage() {
@@ -184,8 +203,21 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         padding: EdgeInsets.fromLTRB(0.0, 70.0, 0.0, 0.0),
         child: CircleAvatar(
           backgroundColor: Colors.transparent,
-          radius: 48.0,
+          radius: 28.0,
           child: Image.asset('assets/images/icon.png'),
+        ),
+      ),
+    );
+  }
+
+  Widget showText() {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 0.0),
+      child: Text(
+        (_isLoginForm ? 'Sign In' : 'Sign Up'),
+        style: TextStyle(
+          color: Colors.grey[800],
+          fontSize: 24.0,
         ),
       ),
     );
@@ -246,7 +278,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   Widget showLibNumInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
       child: TextFormField(
         maxLines: 1,
         autofocus: false,
@@ -272,7 +304,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   Widget showNameInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
       child: TextFormField(
         maxLines: 1,
         autofocus: false,
@@ -291,7 +323,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   Widget showPhoneInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
       child: TextFormField(
         maxLines: 1,
         autofocus: false,
@@ -346,3 +378,39 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     );
   }
 }
+
+// import 'package:flutter/material.dart';
+
+// class LoginSignupPage extends StatefulWidget {
+//   @override
+//   _LoginSignupPageState createState() => _LoginSignupPageState();
+// }
+
+// class _LoginSignupPageState extends State<LoginSignupPage> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       decoration: BoxDecoration(
+//         image: DecorationImage(
+//           image: AssetImage("assets/images/background.jpg"),
+//           fit: BoxFit.cover,
+//         ),
+//       ),
+//       child: Scaffold(
+//         backgroundColor: Colors.transparent,
+//         body: Container(
+//           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+//           child: Form(
+//             child: Column(
+//               children: <Widget>[
+//                 Expanded(
+//                   child: SizedBox(height: 20.0),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

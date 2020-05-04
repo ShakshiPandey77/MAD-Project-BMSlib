@@ -11,14 +11,19 @@ class AuthService {
   }
 
   // auth change user stream
-  Stream<User> get user {
-    return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
+  // Stream<User> get user {
+  //   return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
+  // }
+
+  // return FirebaseAuth object
+  FirebaseAuth get getAuth {
+    return _auth;
   }
 
   // get current user
-  Future<FirebaseUser> getCurrentUser() async {
+  Future<User> getCurrentUser() async {
     FirebaseUser user = await _auth.currentUser();
-    return user;
+    return _userFromFirebaseUser(user);
   }
 
   // sign in with email, library card number and password

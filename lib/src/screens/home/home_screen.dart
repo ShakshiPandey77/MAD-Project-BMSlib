@@ -125,6 +125,7 @@
 //   }
 // }
 
+import 'package:bmslib/src/models/notifiers/theme_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -140,14 +141,34 @@ import 'package:bmslib/src/widgets/drawer/issuer_drawer.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //var themeNotifier = Provider.of<ThemeNotifier>(context);
+    var themeNotifier = Provider.of<ThemeNotifier>(context);
     //var bookNotifier = Provider.of<BookNotifier>(context);
     // FIXME: Want to set wideScreen here but it can't be null
     // Don't know why it is not possible to initialize it here
 
     // stream provider for book data
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: AppBar(
+        title: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text('BMSLib'),
+        ),
+        actions: [
+          IconButton(
+            icon: themeNotifier.darkModeEnabled
+                ? Icon(Icons.brightness_7)
+                : Icon(Icons.brightness_2),
+            color: Theme.of(context).iconTheme.color,
+            onPressed: () => themeNotifier.toggleTheme(),
+          ),
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showSearch(context: context, delegate: null /*BookSearch()*/);
+            },
+          ),
+        ],
+      ),
       drawer: IssuerDrawer(),
       body: Container(
         child: MediaQuery.of(context).size.width > wideLayoutThreshold

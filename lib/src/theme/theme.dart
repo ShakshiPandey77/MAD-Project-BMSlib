@@ -37,6 +37,11 @@ class Theme {
         fontSize: 17.0,
         color: kAccentColor,
       ),
+      body1: TextStyle(
+        fontFamily: 'Nunito',
+        fontSize: 14.0,
+        color: kGreyColor,
+      ),
     );
   }
 
