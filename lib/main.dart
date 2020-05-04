@@ -1,12 +1,12 @@
-import 'package:bmslib/src/models/user.dart';
+//import 'package:bmslib/src/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:bmslib/src/services/auth.dart';
+//import 'package:bmslib/src/services/auth.dart';
 import 'package:bmslib/src/models/notifiers/theme_notifier.dart';
 //import 'package:bmslib/src/models/notifiers/book_notifier.dart';
 import 'package:bmslib/src/theme/theme.dart' as libraryTheme;
-import 'package:bmslib/src/screens/splash/splash_screen.dart';
+import 'package:bmslib/src/screens/current_screen.dart';
 
 void main() => runApp(BMSLib());
 
