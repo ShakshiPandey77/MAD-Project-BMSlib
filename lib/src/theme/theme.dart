@@ -42,13 +42,18 @@ class Theme {
         fontSize: 14.0,
         color: kGreyColor,
       ),
+      body2: TextStyle(
+        fontFamily: 'Nunito',
+        fontSize: 14.0,
+        color: kGreyColor,
+      ),
     );
   }
 
   static AppBarTheme get _appBarTheme {
     return AppBarTheme(
       elevation: 1,
-      color: kPrimaryColor,
+      color: kPrimaryColorAppBar,
       textTheme: _lightTextTheme.copyWith(
         title: TextStyle(
           fontSize: 22.0,

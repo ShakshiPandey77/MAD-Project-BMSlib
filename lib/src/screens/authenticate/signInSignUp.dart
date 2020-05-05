@@ -27,10 +27,8 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     final form = _formKey.currentState;
     if (form.validate()) {
       form.save();
-      //print("true");
       return true;
     }
-    //print("false");
     return false;
   }
 
@@ -44,7 +42,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       User user;
       if (_isLoginForm) {
         // login the user
-        user = await _auth.signIn(_email, _libcard, _password);
+        user = await _auth.signIn(_email, _password);
         if (user != null) {
           print('Signed in: ${user.uid}');
         } else {
@@ -84,10 +82,10 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   @override
   void initState() {
+    super.initState();
     _errorMessage = "";
     _isLoading = false;
     _isLoginForm = true;
-    super.initState();
   }
 
   void resetForm() {
@@ -152,7 +150,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
                         showLogo(),
                         showText(),
                         showEmailInput(),
-                        showLibNumInput(),
                         showPasswordInput(),
                         showErrorMessage(),
                         showPrimaryButton(),
@@ -188,7 +185,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             fontSize: 18.0,
             color: Colors.red,
             height: 1.0,
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w600,
           ),
         ),
       );
@@ -235,14 +232,14 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         maxLines: 1,
         keyboardType: TextInputType.emailAddress,
         autofocus: false,
-        style: TextStyle(
-          color: Colors.grey[900],
-        ),
         decoration: InputDecoration(
           hintText: 'Email',
           icon: Icon(
             Icons.mail,
             color: Colors.grey,
+          ),
+          hintStyle: TextStyle(
+            color: Colors.grey[900],
           ),
         ),
         validator: (value) {
@@ -264,16 +261,17 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       child: TextFormField(
         maxLines: 1,
         obscureText: true,
-        style: TextStyle(
-          color: Colors.grey[900],
-        ),
         autofocus: false,
         decoration: InputDecoration(
-            hintText: 'Password',
-            icon: Icon(
-              Icons.lock,
-              color: Colors.grey,
-            )),
+          hintText: 'Password',
+          icon: Icon(
+            Icons.lock,
+            color: Colors.grey,
+          ),
+          hintStyle: TextStyle(
+            color: Colors.grey[900],
+          ),
+        ),
         validator: (value) {
           if (value.isEmpty)
             return 'Password can\'t be empty';
@@ -293,14 +291,14 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       child: TextFormField(
         maxLines: 1,
         autofocus: false,
-        style: TextStyle(
-          color: Colors.grey[900],
-        ),
         decoration: InputDecoration(
           hintText: 'Library Card Number',
           icon: Icon(
             Icons.card_membership,
             color: Colors.grey,
+          ),
+          hintStyle: TextStyle(
+            color: Colors.grey[900],
           ),
         ),
         validator: (value) {
@@ -322,14 +320,14 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       child: TextFormField(
         maxLines: 1,
         autofocus: false,
-        style: TextStyle(
-          color: Colors.grey[900],
-        ),
         decoration: InputDecoration(
           hintText: 'Name',
           icon: Icon(
             Icons.person,
             color: Colors.grey,
+          ),
+          hintStyle: TextStyle(
+            color: Colors.grey[900],
           ),
         ),
         validator: (value) => value.isEmpty ? 'Name can\'t be empty' : null,
@@ -344,14 +342,14 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       child: TextFormField(
         maxLines: 1,
         autofocus: false,
-        style: TextStyle(
-          color: Colors.grey[900],
-        ),
         decoration: InputDecoration(
           hintText: 'Phone',
           icon: Icon(
             Icons.phone,
             color: Colors.grey,
+          ),
+          hintStyle: TextStyle(
+            color: Colors.grey[900],
           ),
         ),
         validator: (value) {

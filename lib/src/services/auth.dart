@@ -27,18 +27,12 @@ class AuthService {
   }
 
   // sign in with email, library card number and password
-  Future signIn(String email, String libcard, String password) async {
+  Future signIn(String email, String password) async {
     try {
       AuthResult result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser user = result.user;
-      // check for library card info
-      String userLibCard =
-          await DatabaseService(uid: user.uid).getData('libid');
-      if (libcard == userLibCard)
-        return _userFromFirebaseUser(user);
-      else
-        return null;
+      return _userFromFirebaseUser(user);
     } catch (error) {
       print(error.toString());
       return null;

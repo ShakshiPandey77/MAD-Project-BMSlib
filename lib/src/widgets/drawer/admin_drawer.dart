@@ -18,6 +18,7 @@ class AdminDrawer extends StatelessWidget {
           ListTile(
             title: Text('Logout'),
             onTap: () {
+              Navigator.pop(context);
               _auth.signOut();
             },
           ),

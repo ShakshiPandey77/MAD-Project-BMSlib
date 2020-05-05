@@ -155,17 +155,21 @@ class HomeScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showSearch(context: context, delegate: null /*BookSearch()*/);
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.notifications),
+            onPressed: () {},
+          ),
+          IconButton(
             icon: themeNotifier.darkModeEnabled
                 ? Icon(Icons.brightness_7)
                 : Icon(Icons.brightness_2),
             color: Theme.of(context).iconTheme.color,
             onPressed: () => themeNotifier.toggleTheme(),
-          ),
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              showSearch(context: context, delegate: null /*BookSearch()*/);
-            },
           ),
         ],
       ),

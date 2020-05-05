@@ -102,7 +102,7 @@ class CurrentScreen extends StatelessWidget {
           print("waiting...");
           return Loading();
         } else if (snapshot.hasData) {
-          print(snapshot.data.toString());
+          //print(snapshot.data.toString());
           print("-> Home");
           return HomeScreen();
         } else {
