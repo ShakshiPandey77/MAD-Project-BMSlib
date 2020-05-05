@@ -369,8 +369,13 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   Widget showSecondaryButton() {
     return FlatButton(
       child: Text(
-          _isLoginForm ? 'Create an account' : 'Have an account? Sign in',
-          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300)),
+        _isLoginForm ? 'Create an account' : 'Have an account? Sign in',
+        style: TextStyle(
+          fontSize: 18.0,
+          fontWeight: FontWeight.w300,
+          color: Colors.grey[800],
+        ),
+      ),
       onPressed: toggleFormMode,
     );
   }
