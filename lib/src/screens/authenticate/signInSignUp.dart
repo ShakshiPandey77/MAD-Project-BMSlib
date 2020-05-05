@@ -232,6 +232,9 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         maxLines: 1,
         keyboardType: TextInputType.emailAddress,
         autofocus: false,
+        style: TextStyle(
+          color: Colors.grey[900],
+        ),
         decoration: InputDecoration(
           hintText: 'Email',
           icon: Icon(
@@ -262,6 +265,9 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         maxLines: 1,
         obscureText: true,
         autofocus: false,
+        style: TextStyle(
+          color: Colors.grey[900],
+        ),
         decoration: InputDecoration(
           hintText: 'Password',
           icon: Icon(
@@ -291,6 +297,9 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       child: TextFormField(
         maxLines: 1,
         autofocus: false,
+        style: TextStyle(
+          color: Colors.grey[900],
+        ),
         decoration: InputDecoration(
           hintText: 'Library Card Number',
           icon: Icon(
@@ -320,6 +329,9 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       child: TextFormField(
         maxLines: 1,
         autofocus: false,
+        style: TextStyle(
+          color: Colors.grey[900],
+        ),
         decoration: InputDecoration(
           hintText: 'Name',
           icon: Icon(
@@ -342,6 +354,9 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
       child: TextFormField(
         maxLines: 1,
         autofocus: false,
+        style: TextStyle(
+          color: Colors.grey[900],
+        ),
         decoration: InputDecoration(
           hintText: 'Phone',
           icon: Icon(

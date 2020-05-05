@@ -1,6 +1,8 @@
 //import 'package:bmslib/src/models/user.dart';
+import 'package:bmslib/src/widgets/network.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:bmslib/src/services/connectivity.dart';
 
 //import 'package:bmslib/src/services/auth.dart';
 import 'package:bmslib/src/models/notifiers/theme_notifier.dart';
@@ -16,6 +18,9 @@ class BMSLib extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeNotifier()),
+        StreamProvider<ConnectionStatus>.value(
+          value: ConnectivityService().connectivityController.stream,
+        ),
         //ChangeNotifierProvider(create: (_) => BookNotifier()),
         // StreamProvider<User>.value(
         //   value: AuthService().user,
@@ -37,7 +42,9 @@ class MaterialAppWithTheme extends StatelessWidget {
           ? libraryTheme.Theme.darkTheme
           : libraryTheme.Theme.lightTheme,
       debugShowCheckedModeBanner: false,
-      home: CurrentScreen(),
+      home: NetworkWidget(
+        child: CurrentScreen(),
+      ),
     );
   }
 }
