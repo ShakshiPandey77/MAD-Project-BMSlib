@@ -13,7 +13,7 @@
 class User {
   final String uid;
 
-  User({this.uid});
+  const User({this.uid});
 }
 
 class UserData {
@@ -25,7 +25,7 @@ class UserData {
   final int borrowed; // number of borrowed books
   final List<Bag> bag; // user's bag
 
-  UserData({
+  const UserData({
     this.uid,
     this.libid,
     this.name,

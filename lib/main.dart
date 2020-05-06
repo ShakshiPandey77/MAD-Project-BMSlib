@@ -1,4 +1,6 @@
 //import 'package:bmslib/src/models/user.dart';
+import 'package:bmslib/src/models/book.dart';
+import 'package:bmslib/src/services/database.dart';
 import 'package:bmslib/src/widgets/network.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +22,9 @@ class BMSLib extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ThemeNotifier()),
         StreamProvider<ConnectionStatus>.value(
           value: ConnectivityService().connectivityController.stream,
+        ),
+        StreamProvider<List<Book>>.value(
+          value: DatabaseService().books,
         ),
         //ChangeNotifierProvider(create: (_) => BookNotifier()),
         // StreamProvider<User>.value(

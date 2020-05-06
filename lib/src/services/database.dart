@@ -70,6 +70,7 @@ class DatabaseService {
   // book list from snapshot
   List<Book> _bookListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
+      //print(doc.data.toString());
       return Book(
         uid: doc.documentID,
         title: doc.data['title'] ?? '',
@@ -81,6 +82,7 @@ class DatabaseService {
         copies: doc.data['copies'] ?? 0,
         rating: doc.data['rating'] ?? 0,
         searchKey: doc.data['searchKey'] ?? '',
+        issuers: doc.data['issuers'] ?? [],
       );
     }).toList();
   }

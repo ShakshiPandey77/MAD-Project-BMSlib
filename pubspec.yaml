@@ -24,9 +24,10 @@ dependencies:
   flutter_speed_dial: ^1.2.1
   flutter_spinkit: "^4.1.2"
   barcode_scan: any
-  firebase_auth: ^0.14.0+5
-  cloud_firestore: ^0.12.9+4
+  firebase_auth: ^0.16.0
+  cloud_firestore: ^0.13.5
   connectivity: ^0.4.8+2
+  fluttertoast: ^4.0.1
 
 
   cupertino_icons: ^0.1.2
@@ -51,6 +52,8 @@ flutter:
     - assets/images/icon.png
     - assets/images/background.jpg
     - assets/images/no_network.gif
+    - assets/images/account.png
+    - assets/images/empty.png
 
   fonts:
     - family: Nunito

@@ -9,6 +9,7 @@ class Book {
   num rating; // rating of the book
   num copies; // available copies of the book
   num edition; // edition of the book
+  List<String> issuers;
 
   Book({
     this.uid,
@@ -21,5 +22,6 @@ class Book {
     this.copies,
     this.rating,
     this.searchKey,
+    this.issuers,
   });
 }

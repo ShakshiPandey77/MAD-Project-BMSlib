@@ -12,7 +12,7 @@ class NetworkWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var network = Provider.of<ConnectionStatus>(context);
+    final network = Provider.of<ConnectionStatus>(context);
     final _width = MediaQuery.of(context).size.width;
     final _height = MediaQuery.of(context).size.height;
 
