@@ -1,5 +1,6 @@
 import 'package:bmslib/src/models/book.dart';
 import 'package:bmslib/src/models/notifiers/theme_notifier.dart';
+import 'package:bmslib/src/models/user.dart';
 //import 'package:bmslib/src/models/user.dart';
 import 'package:bmslib/src/screens/home/book_list.dart';
 import 'package:bmslib/src/services/auth.dart';
@@ -7,8 +8,7 @@ import 'package:bmslib/src/widgets/empty.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
-import 'package:bmslib/src/widgets/drawer/issuer_drawer.dart';
-import 'package:bmslib/src/widgets/drawer/admin_drawer.dart';
+import 'package:bmslib/src/widgets/drawer/my_drawer.dart';
 import 'package:bmslib/src/screens/notification/notification.dart';
 import 'package:bmslib/src/enums/book_category.dart';
 
@@ -16,8 +16,10 @@ class HomeScreen extends StatelessWidget {
   final currentUser = AuthService().getCurrentUser();
   @override
   Widget build(BuildContext context) {
+    String uid;
     bool isAdmin;
     currentUser.then((user) {
+      uid = user.uid;
       isAdmin = user.isAdmin;
     });
     final themeNotifier = Provider.of<ThemeNotifier>(context);
@@ -69,7 +71,9 @@ class HomeScreen extends StatelessWidget {
             }),
           ),
         ),
-        drawer: isAdmin ? AdminDrawer() : IssuerDrawer(),
+        drawer: MyDrawer(
+          currentUser: User(uid: uid, isAdmin: isAdmin),
+        ),
         body: (bookList == null)
             ? emptyWidget("An error has occurred ! Please restart the app")
             : (bookList.isEmpty)

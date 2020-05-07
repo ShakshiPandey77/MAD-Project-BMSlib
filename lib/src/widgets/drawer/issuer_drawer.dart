@@ -29,7 +29,7 @@ class IssuerDrawer extends StatelessWidget {
             leading: Icon(Icons.home),
             title: Text(
               'Home',
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 14),
             ),
             onTap: () {
               Navigator.pop(context);
@@ -38,7 +38,7 @@ class IssuerDrawer extends StatelessWidget {
           ListTile(
             title: Text(
               'My Bag',
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 14),
             ),
             leading: Icon(Icons.account_balance_wallet),
             onTap: () {
@@ -48,7 +48,7 @@ class IssuerDrawer extends StatelessWidget {
           ListTile(
             title: Text(
               'My Account',
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 14),
             ),
             leading: Icon(Icons.person),
             onTap: () {
@@ -58,7 +58,7 @@ class IssuerDrawer extends StatelessWidget {
           ListTile(
             title: Text(
               'Logout',
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 14),
             ),
             leading: Icon(Icons.exit_to_app),
             onTap: () {
@@ -73,7 +73,7 @@ class IssuerDrawer extends StatelessWidget {
             contentPadding: EdgeInsets.only(left: 15),
             title: Text(
               'Close',
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 14),
             ),
             leading: Icon(Icons.cancel),
             onTap: () {
