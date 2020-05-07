@@ -6,8 +6,8 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // create user obj based on firebase user
-  User _userFromFirebaseUser(FirebaseUser user) {
-    return user != null ? User(uid: user.uid) : null;
+  User _userFromFirebaseUser(FirebaseUser user, bool isAdmin) {
+    return user != null ? User(uid: user.uid, isAdmin: isAdmin) : null;
   }
 
   // auth change user stream
@@ -23,7 +23,9 @@ class AuthService {
   // get current user
   Future<User> getCurrentUser() async {
     FirebaseUser user = await _auth.currentUser();
-    return _userFromFirebaseUser(user);
+    final idTokenResult = await user.getIdToken(refresh: true);
+    bool isAdmin = idTokenResult.claims['admin'] ?? false;
+    return _userFromFirebaseUser(user, isAdmin);
   }
 
   // sign in with email, library card number and password
@@ -32,8 +34,10 @@ class AuthService {
       AuthResult result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser user = result.user;
-      //print(result);
-      return _userFromFirebaseUser(user);
+      final idTokenResult = await user.getIdToken(refresh: true);
+      bool isAdmin = idTokenResult.claims['admin'] ?? false;
+      //print(isAdmin);
+      return _userFromFirebaseUser(user, isAdmin);
     } catch (error) {
       print(error.toString());
       return null;
@@ -55,7 +59,7 @@ class AuthService {
         newUser.borrowed,
         newUser.bag,
       );
-      return _userFromFirebaseUser(user);
+      return _userFromFirebaseUser(user, false); // isAdmin is false
     } catch (error) {
       print(error.toString());
       return null;

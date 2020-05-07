@@ -2,7 +2,6 @@ import 'package:bmslib/src/models/user.dart';
 import 'package:bmslib/src/widgets/loading/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:bmslib/src/services/auth.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 
 class LoginSignupPage extends StatefulWidget {
   @override
@@ -412,16 +411,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             style: TextStyle(fontSize: 20.0, color: Colors.white),
           ),
           onPressed: validateAndSubmit,
-          // onPressed: () async {
-          //   final HttpsCallable callable =
-          //       CloudFunctions.instance.getHttpsCallable(
-          //     functionName: 'addAdminRole',
-          //   );
-          //   dynamic resp = await callable.call(<String, dynamic>{
-          //     'email': 'shehyaaz.cs17@bmsce.ac.in',
-          //   });
-          //   print(resp);
-          // },
         ),
       ),
     );

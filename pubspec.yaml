@@ -28,7 +28,6 @@ dependencies:
   cloud_firestore: ^0.13.5
   connectivity: ^0.4.8+2
   fluttertoast: ^4.0.1
-  cloud_functions: ^0.4.2+3
 
 
   cupertino_icons: ^0.1.2

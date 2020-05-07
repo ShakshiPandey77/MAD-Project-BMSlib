@@ -9,7 +9,6 @@ import 'package:bmslib/src/services/connectivity.dart';
 
 //import 'package:bmslib/src/services/auth.dart';
 import 'package:bmslib/src/models/notifiers/theme_notifier.dart';
-//import 'package:bmslib/src/models/notifiers/book_notifier.dart';
 import 'package:bmslib/src/theme/theme.dart' as libraryTheme;
 import 'package:bmslib/src/screens/current_screen.dart';
 
@@ -32,10 +31,6 @@ class BMSLib extends StatelessWidget {
             return null;
           },
         ),
-        //ChangeNotifierProvider(create: (_) => BookNotifier()),
-        // StreamProvider<User>.value(
-        //   value: AuthService().user,
-        // ),
       ],
       child: MaterialAppWithTheme(), //add wrapper here
     );

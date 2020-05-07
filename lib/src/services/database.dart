@@ -26,7 +26,7 @@ class DatabaseService {
     });
   }
 
-  // return library card number of current user
+  // return specific data of current user
   Future<String> getData(String data) async {
     return await userCollection
         .document(uid)

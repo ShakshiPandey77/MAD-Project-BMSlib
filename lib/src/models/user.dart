@@ -12,8 +12,12 @@
 
 class User {
   final String uid;
+  final bool isAdmin;
 
-  const User({this.uid});
+  const User({
+    this.uid,
+    this.isAdmin,
+  });
 }
 
 class UserData {
