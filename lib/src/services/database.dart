@@ -70,9 +70,8 @@ class DatabaseService {
   // book list from snapshot
   List<Book> _bookListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
-      //print(doc.data.toString());
       return Book(
-        uid: doc.documentID,
+        uid: doc.documentID ?? '',
         title: doc.data['title'] ?? '',
         author: doc.data['author'] ?? '',
         coverUrl: doc.data['cover'] ?? '',

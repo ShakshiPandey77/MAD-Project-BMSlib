@@ -3,14 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:bmslib/src/models/book.dart';
 import 'package:bmslib/src/screens/home/book_tile.dart';
 
-class BookList extends StatelessWidget {
+class BookList extends StatefulWidget {
   final List<Book> _books;
 
   BookList({books}) : _books = books;
 
   @override
+  _BookListState createState() => _BookListState();
+}
+
+class _BookListState extends State<BookList> {
+  @override
   Widget build(BuildContext context) {
-    return (_books.length == 0)
+    return (widget._books.length > 0)
         ? Column(
             children: <Widget>[
               Expanded(
@@ -25,14 +30,14 @@ class BookList extends StatelessWidget {
                       ),
                     );
                   }),
-                  itemCount: _books?.length,
+                  itemCount: widget._books?.length,
                   itemBuilder: ((context, index) {
-                    return BookTile(_books?.elementAt(index));
+                    return BookTile(widget._books?.elementAt(index));
                   }),
                 ),
               ),
             ],
           )
-        : emptyWidget();
+        : emptyWidget("Nothing to see here");
   }
 }

@@ -27,7 +27,7 @@ class BookTile extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(8.0),
         margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 25.0),
-        height: 260.0,
+        //height: 260.0,
         child: Row(
           children: [
             Flexible(
@@ -74,7 +74,7 @@ class BookTile extends StatelessWidget {
                     ),
                     StarRating(
                       starCount: 5,
-                      rating: (_book.rating / 2).toDouble(),
+                      rating: (_book.rating).toDouble(),
                     ),
                     Text(
                       '${_book.category}',

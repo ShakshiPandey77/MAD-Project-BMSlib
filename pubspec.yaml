@@ -22,12 +22,13 @@ dependencies:
   provider: ^4.0.2
   smooth_star_rating: ^1.0.3
   flutter_speed_dial: ^1.2.1
-  flutter_spinkit: "^4.1.2"
-  barcode_scan: any
+  flutter_spinkit: ^4.1.2
   firebase_auth: ^0.16.0
+  firebase_core: ^0.4.4+3
   cloud_firestore: ^0.13.5
   connectivity: ^0.4.8+2
   fluttertoast: ^4.0.1
+  cloud_functions: ^0.4.2+3
 
 
   cupertino_icons: ^0.1.2

@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 
-Widget emptyWidget() {
-  return Container(
-    decoration: BoxDecoration(
-      image: DecorationImage(
-        image: AssetImage("assets/images/empty.png"),
-        fit: BoxFit.cover,
+Widget emptyWidget(String msg) {
+  return SizedBox.expand(
+    child: Center(
+      child: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/empty.png"),
+            fit: BoxFit.contain,
+          ),
+        ),
+        child: Center(
+          child: Text(
+            msg,
+            style: TextStyle(
+              fontSize: 36,
+            ),
+          ),
+        ),
       ),
     ),
-    child: Text(
-      "Nothing to see here",
-      style: TextStyle(
-        color: Colors.grey[800],
-      ),
-    ) /* add child content here */,
   );
 }

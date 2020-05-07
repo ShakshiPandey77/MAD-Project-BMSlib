@@ -105,7 +105,7 @@ class BookDetails extends StatelessWidget {
                 ),
                 StarRating(
                   starCount: 5,
-                  rating: (_book.rating / 2).toDouble(),
+                  rating: (_book.rating).toDouble(),
                 ),
                 Divider(
                   color: Colors.grey.withOpacity(0.5),
@@ -123,7 +123,7 @@ class BookDetails extends StatelessWidget {
           overlayOpacity: 0.25,
           overlayColor:
               themeNotifier.darkModeEnabled ? Colors.black : Colors.white,
-          animatedIcon: AnimatedIcons.home_menu,
+          animatedIcon: AnimatedIcons.list_view,
           children: [
             (_book.copies > 0)
                 ? _buildSubFab(

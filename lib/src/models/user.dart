@@ -23,7 +23,7 @@ class UserData {
   final String email; // user email
   final String phone; // user phone number
   final int borrowed; // number of borrowed books
-  final List<Bag> bag; // user's bag
+  final List bag; // user's bag
 
   const UserData({
     this.uid,

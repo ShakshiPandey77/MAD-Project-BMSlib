@@ -128,9 +128,11 @@
 import 'package:bmslib/src/models/book.dart';
 import 'package:bmslib/src/models/notifiers/theme_notifier.dart';
 import 'package:bmslib/src/screens/home/book_list.dart';
+import 'package:bmslib/src/widgets/empty.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
 
 //import 'package:bmslib/src/screens/book/book_details.dart';
 //import 'package:bmslib/src/models/notifiers/book_notifier.dart';
@@ -139,32 +141,21 @@ import 'package:provider/provider.dart';
 //import 'package:bmslib/src/widgets/book_list.dart';
 //import 'package:bmslib/src/widgets/appbar/appbar.dart';
 import 'package:bmslib/src/widgets/drawer/issuer_drawer.dart';
+import 'package:bmslib/src/widgets/drawer/admin_drawer.dart';
 import 'package:bmslib/src/screens/notification/notification.dart';
 import 'package:bmslib/src/enums/book_category.dart';
 //import 'package:bmslib/src/screens/home/book_tile.dart';
 //import 'package:bmslib/src/style.dart';
 //import 'package:bmslib/src/services/database.dart';
 
-class HomeScreen extends StatefulWidget {
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen>
-    with SingleTickerProviderStateMixin {
-  TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController =
-        new TabController(length: bookCategory.length, vsync: this);
-  }
-
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     final bookList = Provider.of<List<Book>>(context);
+
+    //print("bookList -> $bookList");
+
     //bookList.forEach((book) => print(book.title));
     //var bookNotifier = Provider.of<BookNotifier>(context);
     // FIXME: Want to set wideScreen here but it can't be null
@@ -187,84 +178,89 @@ class _HomeScreenState extends State<HomeScreen>
     //   );
     // }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text('BMSLib'),
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              showSearch(context: context, delegate: null /*BookSearch()*/);
-            },
+    return DefaultTabController(
+      length: bookCategory.length,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('BMSLib'),
           ),
-          IconButton(
-            icon: Icon(Icons.notifications),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MyNotification(),
-                ),
-              );
-            },
-          ),
-          IconButton(
-            icon: themeNotifier.darkModeEnabled
-                ? Icon(Icons.brightness_7)
-                : Icon(Icons.brightness_2),
-            color: Theme.of(context).iconTheme.color,
-            onPressed: () => themeNotifier.toggleTheme(),
-          ),
-        ],
-        bottom: TabBar(
-          controller: _tabController,
-          indicatorColor: Colors.blueAccent,
-          labelColor: Colors.blue,
-          unselectedLabelColor: Colors.grey,
-          isScrollable: true,
-          tabs: List<Widget>.generate(bookCategory.length, (int index) {
-            return Tab(
-              text: bookCategory[index],
-            );
-          }),
-        ),
-      ),
-      drawer: IssuerDrawer(),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: TabBarView(
-          children: List<Widget>.generate(bookCategory.length, (int index) {
-            if (bookList == null) {
-              return Container(
-                color: Colors.grey[300],
-                child: Center(
-                  child: SpinKitWave(
-                    color: Colors.blue[800],
+          actions: [
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                showSearch(context: context, delegate: null /*BookSearch()*/);
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.notifications),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MyNotification(),
                   ),
-                ),
+                );
+              },
+            ),
+            IconButton(
+              icon: themeNotifier.darkModeEnabled
+                  ? Icon(Icons.brightness_7)
+                  : Icon(Icons.brightness_2),
+              color: Theme.of(context).iconTheme.color,
+              onPressed: () => themeNotifier.toggleTheme(),
+            ),
+          ],
+          bottom: TabBar(
+            indicatorColor: Colors.blueAccent,
+            labelColor: Colors.blue,
+            unselectedLabelColor: Colors.grey,
+            isScrollable: true,
+            tabs: List<Widget>.generate(bookCategory.length, (int index) {
+              return Tab(
+                text: bookCategory[index],
               );
-            } else {
-              return BookList(
-                  books: bookList
-                      .where((book) => book.category == bookCategory[index])
-                      .toList());
-            }
-          }),
+            }),
+          ),
         ),
+        drawer: IssuerDrawer(),
+        body: (bookList == null)
+            ? emptyWidget("An error has occurred ! Please restart the app")
+            : (bookList.isEmpty)
+                ? Container(
+                    color: Colors.grey[300],
+                    child: Center(
+                      child: SpinKitWave(
+                        color: Colors.blue[800],
+                      ),
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TabBarView(
+                      physics: ScrollPhysics(),
+                      children: List<Widget>.generate(bookCategory.length,
+                          (int index) {
+                        return BookList(
+                            books: bookList
+                                .where((book) =>
+                                    book.category == bookCategory[index])
+                                .toList());
+                      }),
+                    ),
+                  ),
+        // floatingActionButton: MediaQuery.of(context).size.width <
+        //         wideLayoutThreshold
+        //     ? FloatingActionButton(
+        //         child: Icon(Icons.add),
+        //         onPressed: () {
+        //           Navigator.push(context,
+        //               MaterialPageRoute(builder: (_) => null /*BookAdd()*/));
+        //         },
+        //       )
+        //     : Container(),
       ),
-      // floatingActionButton: MediaQuery.of(context).size.width <
-      //         wideLayoutThreshold
-      //     ? FloatingActionButton(
-      //         child: Icon(Icons.add),
-      //         onPressed: () {
-      //           Navigator.push(context,
-      //               MaterialPageRoute(builder: (_) => null /*BookAdd()*/));
-      //         },
-      //       )
-      //     : Container(),
     );
   }
 }

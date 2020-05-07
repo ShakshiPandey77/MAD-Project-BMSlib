@@ -2,6 +2,7 @@
 import 'package:bmslib/src/models/book.dart';
 import 'package:bmslib/src/services/database.dart';
 import 'package:bmslib/src/widgets/network.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bmslib/src/services/connectivity.dart';
@@ -25,6 +26,11 @@ class BMSLib extends StatelessWidget {
         ),
         StreamProvider<List<Book>>.value(
           value: DatabaseService().books,
+          initialData: [],
+          catchError: (_, __) {
+            print(__.toString());
+            return null;
+          },
         ),
         //ChangeNotifierProvider(create: (_) => BookNotifier()),
         // StreamProvider<User>.value(

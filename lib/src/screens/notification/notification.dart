@@ -11,7 +11,7 @@ class MyNotification extends StatelessWidget {
           child: Text('Notifications'),
         ),
       ),
-      body: emptyWidget(),
+      body: emptyWidget("Nothing to see here"),
     );
   }
 }
