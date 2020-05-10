@@ -17,17 +17,12 @@ class BookTile extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        // if (MediaQuery.of(context).size.width > wideLayoutThreshold) {
-        //   bookList.selectedIndex = bookList.books.indexOf(_book);
-        // } else {
         Navigator.push(
             context, MaterialPageRoute(builder: (_) => BookDetails(_book)));
-        //}
       },
       child: Container(
         padding: const EdgeInsets.all(8.0),
         margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 25.0),
-        //height: 260.0,
         child: Row(
           children: [
             Flexible(
@@ -38,10 +33,6 @@ class BookTile extends StatelessWidget {
             Flexible(
               flex: 6,
               child: Container(
-                // decoration: bookNotifier.selectedIndex ==
-                //             bookNotifier.books.indexOf(_book) &&
-                //         MediaQuery.of(context).size.width > wideLayoutThreshold
-                //     ?
                 decoration: BoxDecoration(
                   border: Border(
                     right: BorderSide(
@@ -50,7 +41,6 @@ class BookTile extends StatelessWidget {
                     ),
                   ),
                 ),
-                // : null,
                 padding: const EdgeInsets.fromLTRB(20.0, 18.0, 0.0, 18.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,

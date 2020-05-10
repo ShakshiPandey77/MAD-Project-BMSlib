@@ -52,14 +52,23 @@ class DatabaseService {
     );
   }
 
-  Future<void> updateBookData(String barcode, int edition, int copies,
-      double rating, String coverUrl) async {
-    return await bookCollection.document(barcode).setData({
-      'edition': edition,
-      'copies': copies,
-      'rating': rating,
-      'cover': coverUrl,
+  Future<void> updateBookData(Book book) async {
+    return await bookCollection.document(book.uid).setData({
+      'title': book.title,
+      'author': book.author,
+      'cover': book.coverUrl,
+      'category': book.category,
+      'edition': book.edition,
+      'publisher': book.publisher,
+      'copies': book.copies,
+      'rating': book.rating,
+      'searchKey': book.searchKey,
+      'issuers': book.issuers,
     });
+  }
+
+  Future<void> deleteBookData(String bookID) async {
+    return await bookCollection.document(bookID).delete();
   }
 
   // get books stream

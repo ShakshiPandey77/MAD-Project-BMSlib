@@ -125,9 +125,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   Widget _showLoading() {
     if (_isLoading) {
-      //return Center(
-      // child: CircularProgressIndicator(),
-      //);
       return Loading();
     }
     return Container(
@@ -313,7 +310,10 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         validator: (value) {
           if (value.isEmpty)
             return 'Library Card can\'t be empty';
-          else if (value.length != 8)
+          else if (value.length != 8 ||
+              !value.startsWith("UG-") ||
+              !value.startsWith("PG-") ||
+              !value.startsWith("FC-"))
             return 'Invalid Card Number';
           else
             return null;

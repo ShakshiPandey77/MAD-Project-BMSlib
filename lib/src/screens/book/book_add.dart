@@ -1,21 +1,23 @@
+//import 'package:barcode_scan/barcode_scan.dart';
+import 'package:bmslib/src/services/database.dart';
+import 'package:bmslib/src/widgets/loading/loading.dart';
 import 'package:bmslib/src/models/book.dart';
 import 'package:bmslib/src/widgets/buttons/confirm_button.dart';
 import 'package:bmslib/src/widgets/inputs/book_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:provider/provider.dart';
+import 'package:bmslib/src/enums/book_category.dart';
 
 class BookAdd extends StatelessWidget {
   // adds or edits book details
   final Book book;
 
   BookAdd({this.book});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(book == null ? 'Add Book' : 'Update Book'),
+        title: Text(book?.title == null ? 'Add Book' : 'Update Book'),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -38,7 +40,10 @@ class AddBookForm extends StatefulWidget {
 
 class _AddBookFormState extends State<AddBookForm> {
   final _formKey = GlobalKey<FormState>();
-  String barcode = '';
+
+  bool _isLoading;
+
+  String _barcode;
   String _title = '';
   String _author = '';
   String _coverUrl = '';
@@ -53,17 +58,39 @@ class _AddBookFormState extends State<AddBookForm> {
   @override
   void initState() {
     super.initState();
-    _rating = widget.book?.rating ?? 0.0;
-    _issuers = widget.book?.issuers ?? [];
+    _isLoading = false;
+    _barcode = widget.book?.uid;
+    _category = widget.book?.category;
+    _rating = widget.book?.rating == null ? 0.0 : widget.book.rating;
+    _issuers = widget.book?.issuers == null ? [] : widget.book.issuers;
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return Loading();
+    }
+
     return Form(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
+          TextFormField(
+            initialValue: _barcode,
+            style: Theme.of(context).textTheme.caption.copyWith(
+                  fontSize: 16.0,
+                  color: Theme.of(context).textTheme.title.color,
+                ),
+            decoration: InputDecoration(
+                labelText: "BarCode",
+                errorStyle: TextStyle(
+                  fontSize: 15.0,
+                  height: 0.9,
+                ),
+                labelStyle: TextStyle(color: Colors.grey)),
+            readOnly: true,
+          ),
           BookTextFormField(
             labelText: 'Title',
             errorText: 'Enter book title',
@@ -90,7 +117,8 @@ class _AddBookFormState extends State<AddBookForm> {
           BookTextFormField(
             labelText: 'Edition',
             errorText: 'Enter the edition',
-            initialValue: widget.book?.edition.toString(),
+            initialValue:
+                (widget.book == null) ? '' : widget.book.edition.toString(),
             onSaved: (value) => _edition = num.parse(value),
           ),
           BookTextFormField(
@@ -99,17 +127,38 @@ class _AddBookFormState extends State<AddBookForm> {
             initialValue: widget.book?.coverUrl,
             onSaved: (value) => _coverUrl = value,
           ),
-          BookTextFormField(
-            // drop down
-            labelText: 'Category',
-            errorText: 'Enter a category',
-            initialValue: widget.book?.category,
-            onSaved: (value) => _category = value,
-          ),
+          DropdownButtonFormField(
+              hint: Text(
+                'Category',
+                style: TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
+              value: widget.book?.category,
+              onChanged: (value) {
+                setState(() => _category = value);
+              },
+              style: Theme.of(context).textTheme.caption.copyWith(
+                    fontSize: 16.0,
+                    color: Theme.of(context).textTheme.title.color,
+                  ),
+              items: bookCategory.map((category) {
+                return DropdownMenuItem(
+                  child: Text(category),
+                  value: category,
+                );
+              }).toList(),
+              validator: (value) {
+                if (value.isEmpty || value.trim().isEmpty) {
+                  return 'Enter the category';
+                }
+                return null;
+              }),
           BookTextFormField(
             labelText: 'Copies',
             errorText: 'Enter the available copies',
-            initialValue: widget.book?.copies.toString(),
+            initialValue:
+                (widget.book == null) ? '' : widget.book.copies.toString(),
             onSaved: (value) => _copies = num.parse(value),
           ),
           InputDecorator(
@@ -124,38 +173,48 @@ class _AddBookFormState extends State<AddBookForm> {
               value: _rating.roundToDouble(),
               min: 0.0,
               max: 5.0,
-              divisions: 5,
+              divisions: 50,
               onChanged: (value) => setState(() => _rating = value),
             ),
           ),
-
-          // button to scan bar code
-
           Padding(
             padding: const EdgeInsets.only(top: 22.0),
             child: ConfirmButton(
               text: widget.book == null ? 'Add Book' : 'Update Book',
-              onPressed: () {
+              onPressed: () async {
                 if (_formKey.currentState.validate()) {
-                  // _formKey.currentState.save();
-                  // final book = Book(_title, _author, _description, _coverUrl,
-                  //     _category, _rating);
+                  setState(() {
+                    _isLoading = true;
+                  });
+                  _formKey.currentState.save();
+                  final book = Book(
+                    uid: _barcode,
+                    title: _title,
+                    author: _author,
+                    coverUrl: _coverUrl,
+                    category: _category,
+                    edition: _edition,
+                    publisher: _publisher,
+                    copies: _copies,
+                    rating: _rating,
+                    searchKey: _searchKey,
+                    issuers: _issuers,
+                  );
 
-                  // if (widget.book == null) {
-                  //   bookNotifier.addBook(book);
-                  //   Navigator.pop(context);
-                  // } else {
-                  //   bookNotifier.updateBook(widget.book, book);
-                  //   Navigator.of(context).pop();
-                  // }
-
-                  // add or edit book details
-
-                  String msg = (widget.book == null)
-                      ? "Added book details"
-                      : "Updated book details";
-                  Fluttertoast.showToast(
-                      msg: msg, toastLength: Toast.LENGTH_LONG);
+                  await DatabaseService().updateBookData(book).then((_) {
+                    String msg = (widget.book == null)
+                        ? "Added book details"
+                        : "Updated book details";
+                    Fluttertoast.showToast(
+                        msg: msg, toastLength: Toast.LENGTH_LONG);
+                    Navigator.pop(context);
+                  }).catchError((error) {
+                    String msg = (widget.book == null)
+                        ? "Couldn't add book details :("
+                        : "Couldn't update book details :(";
+                    Fluttertoast.showToast(
+                        msg: msg, toastLength: Toast.LENGTH_LONG);
+                  });
                 }
               },
             ),

@@ -12,10 +12,14 @@
 
 class User {
   final String uid;
+  final String username;
+  final String email;
   final bool isAdmin;
 
   const User({
     this.uid,
+    this.username,
+    this.email,
     this.isAdmin,
   });
 }

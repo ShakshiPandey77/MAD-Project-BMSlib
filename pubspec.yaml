@@ -28,6 +28,7 @@ dependencies:
   cloud_firestore: ^0.13.5
   connectivity: ^0.4.8+2
   fluttertoast: ^4.0.1
+  barcode_scan: ^3.0.1
 
 
   cupertino_icons: ^0.1.2
@@ -52,7 +53,7 @@ flutter:
     - assets/images/icon.png
     - assets/images/background.jpg
     - assets/images/no_network.gif
-    - assets/images/account.png
+    - assets/images/drawer.jpg
     - assets/images/empty.png
 
   fonts:
