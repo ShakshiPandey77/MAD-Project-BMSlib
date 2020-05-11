@@ -1,4 +1,3 @@
-//import 'package:barcode_scan/barcode_scan.dart';
 import 'package:bmslib/src/services/database.dart';
 import 'package:bmslib/src/widgets/loading/loading.dart';
 import 'package:bmslib/src/models/book.dart';
@@ -53,7 +52,7 @@ class _AddBookFormState extends State<AddBookForm> {
   num _copies = 0;
   num _rating = 0.0;
   num _edition = 0;
-  List _issuers = [];
+  List<Map<String, dynamic>> _issuers = [];
 
   @override
   void initState() {
@@ -205,6 +204,9 @@ class _AddBookFormState extends State<AddBookForm> {
                     String msg = (widget.book?.title == null)
                         ? "Added book details"
                         : "Updated book details";
+                    setState(() {
+                      _isLoading = false;
+                    });
                     Fluttertoast.showToast(
                         msg: msg, toastLength: Toast.LENGTH_LONG);
                     Navigator.pop(context);
@@ -212,6 +214,9 @@ class _AddBookFormState extends State<AddBookForm> {
                     String msg = (widget.book?.title == null)
                         ? "Couldn't add book details :("
                         : "Couldn't update book details :(";
+                    setState(() {
+                      _isLoading = false;
+                    });
                     Fluttertoast.showToast(
                         msg: msg, toastLength: Toast.LENGTH_LONG);
                   });

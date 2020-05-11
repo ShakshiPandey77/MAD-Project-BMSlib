@@ -24,7 +24,7 @@ class UserTile extends StatelessWidget {
                 ),
           ),
           subtitle: Text(
-            "Library ID : ${user.libid}\nEmail : ${user.email}\nPhone : ${user.phone}\nBorrowed : ${user.borrowed},",
+            "Library ID : ${user.libid}\nEmail : ${user.email}\nPhone : ${user.phone}\nBorrowed : ${user.borrowed}",
             style: Theme.of(context).textTheme.subtitle.copyWith(
                   fontSize: 14.0,
                   color: Theme.of(context).textTheme.title.color,
