@@ -135,7 +135,7 @@ class _AddBookFormState extends State<AddBookForm> {
                   color: Colors.grey,
                 ),
               ),
-              value: widget.book?.category,
+              value: _category,
               onChanged: (value) {
                 setState(() => _category = value);
               },
