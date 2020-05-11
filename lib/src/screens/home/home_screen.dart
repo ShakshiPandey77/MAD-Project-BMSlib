@@ -1,6 +1,5 @@
 import 'package:barcode_scan/model/model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 import 'package:bmslib/src/services/barcode.dart';
@@ -23,7 +22,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     final bookList = Provider.of<List<Book>>(context);
-
     return FutureBuilder<User>(
         future: AuthService().getCurrentUser(),
         builder: (context, snapshot) {
@@ -81,6 +79,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               drawer: MyDrawer(
+                uid: snapshot.data.uid,
                 username: snapshot.data.username,
                 userEmail: snapshot.data.email,
                 isAdmin: snapshot.data.isAdmin,
@@ -89,14 +88,7 @@ class HomeScreen extends StatelessWidget {
                   ? emptyWidget(
                       "An error has occurred ! Please restart the app")
                   : (bookList.isEmpty)
-                      ? Container(
-                          color: Colors.grey[300],
-                          child: Center(
-                            child: SpinKitWave(
-                              color: Colors.blue[800],
-                            ),
-                          ),
-                        )
+                      ? Loading()
                       : Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TabBarView(

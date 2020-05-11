@@ -55,6 +55,8 @@ flutter:
     - assets/images/no_network.gif
     - assets/images/drawer.jpg
     - assets/images/empty.png
+    - assets/images/avatar.png
+    - assets/images/book_avatar.png
 
   fonts:
     - family: Nunito

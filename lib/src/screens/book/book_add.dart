@@ -61,8 +61,10 @@ class _AddBookFormState extends State<AddBookForm> {
     _isLoading = false;
     _barcode = widget.book?.uid;
     _category = widget.book?.category;
-    _rating = widget.book?.rating == null ? 0.0 : widget.book.rating;
-    _issuers = widget.book?.issuers == null ? [] : widget.book.issuers;
+    _edition = widget.book?.edition ?? 0;
+    _copies = widget.book?.copies ?? 0;
+    _rating = widget.book?.rating ?? 0.0;
+    _issuers = widget.book?.issuers ?? [];
   }
 
   @override
@@ -117,8 +119,7 @@ class _AddBookFormState extends State<AddBookForm> {
           BookTextFormField(
             labelText: 'Edition',
             errorText: 'Enter the edition',
-            initialValue:
-                (widget.book == null) ? '' : widget.book.edition.toString(),
+            initialValue: _edition.toString(),
             onSaved: (value) => _edition = num.parse(value),
           ),
           BookTextFormField(
@@ -157,8 +158,7 @@ class _AddBookFormState extends State<AddBookForm> {
           BookTextFormField(
             labelText: 'Copies',
             errorText: 'Enter the available copies',
-            initialValue:
-                (widget.book == null) ? '' : widget.book.copies.toString(),
+            initialValue: _copies.toString(),
             onSaved: (value) => _copies = num.parse(value),
           ),
           InputDecorator(
@@ -180,7 +180,7 @@ class _AddBookFormState extends State<AddBookForm> {
           Padding(
             padding: const EdgeInsets.only(top: 22.0),
             child: ConfirmButton(
-              text: widget.book == null ? 'Add Book' : 'Update Book',
+              text: widget.book?.title == null ? 'Add Book' : 'Update Book',
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
                   setState(() {
@@ -202,14 +202,14 @@ class _AddBookFormState extends State<AddBookForm> {
                   );
 
                   await DatabaseService().updateBookData(book).then((_) {
-                    String msg = (widget.book == null)
+                    String msg = (widget.book?.title == null)
                         ? "Added book details"
                         : "Updated book details";
                     Fluttertoast.showToast(
                         msg: msg, toastLength: Toast.LENGTH_LONG);
                     Navigator.pop(context);
                   }).catchError((error) {
-                    String msg = (widget.book == null)
+                    String msg = (widget.book?.title == null)
                         ? "Couldn't add book details :("
                         : "Couldn't update book details :(";
                     Fluttertoast.showToast(

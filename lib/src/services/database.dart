@@ -15,7 +15,7 @@ class DatabaseService {
       Firestore.instance.collection('users');
 
   Future<void> updateUserData(String libid, String name, String email,
-      String phone, int borrowed, List<Bag> bag) async {
+      String phone, int borrowed, List<Map<String, dynamic>> bag) async {
     return await userCollection.document(uid).setData({
       'libcard': libid,
       'name': name,
@@ -34,22 +34,92 @@ class DatabaseService {
         .then((doc) => doc.data[data].toString());
   }
 
+  // set specific data of current user
+  Future<void> setUserData(String data, dynamic val) async {
+    return await userCollection.document(uid).updateData({
+      data: val,
+    });
+  }
+
+  // return bag of current user
+  Future<List<Map<String, dynamic>>> getBag() async {
+    return await userCollection.document(uid).get().then((doc) {
+      var bagList = doc.data['bag'].toList();
+      List<Map<String, dynamic>> bag = List<Map<String, dynamic>>.from(bagList);
+      return bag;
+    });
+  }
+
+  // set bag of current user
+  Future<void> setBag(List<Map<String, dynamic>> bag) async {
+    return await userCollection.document(uid).updateData({
+      'bag': bag,
+    });
+  }
+
   // get current user strean
   Stream<UserData> get user {
     return userCollection.document(uid).snapshots().map(_userDataFromSnapshot);
+  }
+
+  // get current user strean
+  Stream<List<UserData>> get users {
+    return userCollection.snapshots().map(_userListDataFromSnapshot);
+  }
+
+  List<UserData> _userListDataFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc) {
+      return UserData(
+        uid: doc.documentID,
+        libid: doc.data['libcard'] ?? '',
+        name: doc.data['name'] ?? '',
+        phone: doc.data['phone'] ?? '',
+        email: doc.data['email'] ?? '',
+        borrowed: doc.data['borrowed'] ?? 0,
+        bag: List<Map<String, dynamic>>.from(doc.data['bag']) ?? [],
+      );
+    }).toList();
   }
 
   // return current user data
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
     return UserData(
       uid: snapshot.documentID,
-      libid: snapshot.data['libid'] ?? '',
+      libid: snapshot.data['libcard'] ?? '',
       name: snapshot.data['name'] ?? '',
       phone: snapshot.data['phone'] ?? '',
       email: snapshot.data['email'] ?? '',
       borrowed: snapshot.data['borrowed'] ?? 0,
       bag: snapshot.data['bag'] ?? [],
     );
+  }
+
+  // return issuers of current book
+  Future<List<Map<String, dynamic>>> getIssuers(String bookID) async {
+    return await bookCollection.document(bookID).get().then((doc) {
+      var issuerList = doc.data['issuers'].toList();
+      List<Map<String, dynamic>> issuers =
+          List<Map<String, dynamic>>.from(issuerList);
+      return issuers;
+    }).catchError((e) {
+      print(e.toString());
+      return null;
+    });
+  }
+
+  // set issuers of current book
+  Future<void> setIssuers(
+      String bookID, List<Map<String, dynamic>> issuers) async {
+    return await bookCollection.document(bookID).updateData({
+      'issuers': issuers,
+    });
+  }
+
+  // set data of current book
+  Future<void> setBookData(String bookID, String data, dynamic val) async {
+    return await bookCollection.document(bookID).updateData({
+      data: val,
+    });
   }
 
   Future<void> updateBookData(Book book) async {
@@ -90,7 +160,7 @@ class DatabaseService {
         copies: doc.data['copies'] ?? 0,
         rating: doc.data['rating'] ?? 0,
         searchKey: doc.data['searchKey'] ?? '',
-        issuers: doc.data['issuers'] ?? [],
+        issuers: List<Map<String, dynamic>>.from(doc.data['issuers']) ?? [],
       );
     }).toList();
   }

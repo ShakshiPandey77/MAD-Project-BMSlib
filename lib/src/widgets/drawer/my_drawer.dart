@@ -1,4 +1,6 @@
 import 'package:bmslib/src/models/notifiers/theme_notifier.dart';
+import 'package:bmslib/src/screens/home/view_bag.dart';
+import 'package:bmslib/src/screens/home/view_issuers.dart';
 import 'package:bmslib/src/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,12 +8,14 @@ import 'package:provider/provider.dart';
 class MyDrawer extends StatelessWidget {
   final AuthService _auth = AuthService();
 
+  final String uid;
   final String username;
   final String userEmail;
   final bool isAdmin;
 
   MyDrawer({
     Key key,
+    @required this.uid,
     @required this.username,
     @required this.userEmail,
     @required this.isAdmin,
@@ -64,7 +68,7 @@ class MyDrawer extends StatelessWidget {
               ),
             ),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.pop(context); // remain on home screen
             },
           ),
           (isAdmin)
@@ -79,6 +83,12 @@ class MyDrawer extends StatelessWidget {
                   leading: Icon(Icons.people),
                   onTap: () {
                     Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ViewIssuers(),
+                      ),
+                    );
                   },
                 )
               : Container(),
@@ -93,6 +103,12 @@ class MyDrawer extends StatelessWidget {
             leading: Icon(Icons.account_balance_wallet),
             onTap: () {
               Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => ViewBag(uid: uid),
+                ),
+              );
             },
           ),
           ListTile(

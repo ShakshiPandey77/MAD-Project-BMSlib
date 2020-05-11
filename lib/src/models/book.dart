@@ -9,7 +9,7 @@ class Book {
   num rating; // rating of the book
   num copies; // available copies of the book
   num edition; // edition of the book
-  List issuers;
+  List<Map<String, dynamic>> issuers;
 
   Book({
     this.uid,
@@ -28,13 +28,33 @@ class Book {
 
 class Issuers {
   final String issuerLibID; // id of the borrowed book
-  final DateTime issueDate; // date of issue
-  final DateTime returnDate; // date of return is 3 days later
+  final String issueDate; // date of issue
+  final String returnDate; // date of return is 3 days later
   final double fine;
 
   Issuers(
     this.issuerLibID,
     this.issueDate,
     this.fine,
-  ) : returnDate = issueDate.add(new Duration(days: 3));
+  ) : returnDate =
+            DateTime.parse(issueDate).add(new Duration(days: 3)).toString();
+
+  // converts an issuer object to a map
+  Map<String, dynamic> toMap() {
+    return {
+      'issuerLibID': issuerLibID,
+      'issueDate': issueDate.toString(),
+      'returnDate': returnDate.toString(),
+      'fine': fine,
+    };
+  }
+
+  // converts a map to an issuer object
+  static Issuers fromMap(Map<String, dynamic> issuerMap) {
+    return Issuers(
+      issuerMap['issuerLibID'],
+      issuerMap['issueDate'],
+      issuerMap['fine'],
+    );
+  }
 }

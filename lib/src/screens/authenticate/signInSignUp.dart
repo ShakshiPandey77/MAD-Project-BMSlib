@@ -46,6 +46,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         if (user != null) {
           print('Signed in: ${user.uid}');
         } else {
+          if (!mounted) return;
           setState(() {
             _isLoading = false;
             _errorMessage = "Could not sign in with those credentials :(";
@@ -65,6 +66,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         if (user != null) {
           print('Signed up user: ${user.uid}');
         } else {
+          if (!mounted) return;
           setState(() {
             _isLoading = false;
             _errorMessage = "Could not sign up :(";
@@ -311,9 +313,9 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
           if (value.isEmpty)
             return 'Library Card can\'t be empty';
           else if (value.length != 8 ||
-              !value.startsWith("UG-") ||
-              !value.startsWith("PG-") ||
-              !value.startsWith("FC-"))
+              (!value.startsWith("UG-") &&
+                  !value.startsWith("PG-") &&
+                  !value.startsWith("FC-")))
             return 'Invalid Card Number';
           else
             return null;
